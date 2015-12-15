@@ -58,9 +58,9 @@ public class TankMovement : MonoBehaviour
     private void EngineAudio()
     {
        // Play the correct audio clip based on whether or not the tank is moving and what audio is currently playing.
-        if (Mathf.Abs(m_MovementInputValue) < 0.1f && Mathf.Abs(m_TurnInputValue) < 0.1f)
+        if (Mathf.Abs(m_MovementInputValue) < 0.01f && Mathf.Abs(m_TurnInputValue) < 0.01f)
         {
-            if (m_MovementAudio.clip == m_EngineDriving)
+            if (m_MovementAudio.clip != m_EngineIdling)
             {
                 m_MovementAudio.clip = m_EngineIdling;
                 m_MovementAudio.pitch = Random.Range(m_OriginalPitch - m_PitchRange,
@@ -70,7 +70,7 @@ public class TankMovement : MonoBehaviour
         }
         else
         {
-            if (m_MovementAudio.clip == m_EngineIdling)
+            if (m_MovementAudio.clip != m_EngineDriving)
             {
                 m_MovementAudio.clip = m_EngineDriving;
                 m_MovementAudio.pitch = Random.Range(m_OriginalPitch - m_PitchRange,
@@ -92,11 +92,18 @@ public class TankMovement : MonoBehaviour
     {
         // Adjust the position of the tank based on the player's input.
         Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
+
+        m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
     }
 
 
     private void Turn()
     {
         // Adjust the rotation of the tank based on the player's input.
+        float turn = m_TurnInputValue * m_TurnSpeed * Time.deltaTime;
+
+        Quaternion rotation = Quaternion.Euler(0f, turn, 0f);
+
+        m_Rigidbody.MoveRotation(m_Rigidbody.rotation * rotation);
     }
 }
