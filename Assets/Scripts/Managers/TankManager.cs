@@ -6,16 +6,18 @@ public class TankManager
 {
     public Color m_PlayerColor;            
     public Transform m_SpawnPoint;         
-    [HideInInspector] public int m_PlayerNumber;             
-    [HideInInspector] public string m_ColoredPlayerText;
-    [HideInInspector] public GameObject m_Instance;          
-    [HideInInspector] public int m_Wins;                     
-
+    [HideInInspector]
+    public int m_PlayerNumber;             
+    [HideInInspector]
+    public string m_ColoredPlayerText;
+    [HideInInspector]
+    public GameObject m_Instance;          
+    [HideInInspector]
+    public int m_Wins;                     
 
     private TankMovement m_Movement;       
     private TankShooting m_Shooting;
     private GameObject m_CanvasGameObject;
-
 
     public void Setup()
     {
@@ -26,7 +28,8 @@ public class TankManager
         m_Movement.m_PlayerNumber = m_PlayerNumber;
         m_Shooting.m_PlayerNumber = m_PlayerNumber;
 
-        m_ColoredPlayerText = "<color=#" + ColorUtility.ToHtmlStringRGB(m_PlayerColor) + ">PLAYER " + m_PlayerNumber + "</color>";
+        m_ColoredPlayerText = string.Format("<color=#{0}>PLAYER {1}</color>", ColorUtility.ToHtmlStringRGB(m_PlayerColor), m_PlayerNumber);
+        // m_ColoredPlayerText = "<color=#" + ColorUtility.ToHtmlStringRGB(m_PlayerColor) + ">PLAYER " + m_PlayerNumber + "</color>";
 
         MeshRenderer[] renderers = m_Instance.GetComponentsInChildren<MeshRenderer>();
 
